@@ -1,0 +1,53 @@
+#!/bin/bash
+
+## Description: Run code sniffer
+## Usage: sniff [flags] [args]
+## Example: "ddev sniff web/modules/custom"
+
+TOP_LEVEL="/var/www/html"
+cd $TOP_LEVEL
+
+echo "======================"
+echo "Running code sniffer against: $1"
+echo "======================"
+
+# auto-fix what can be fixed
+echo "--------------"
+echo "Running PHPCBF"
+echo "--------------"
+
+/var/www/html/vendor/bin/phpcbf --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@
+
+
+# find what is left to fix
+echo "-------------"
+echo "Running PHPCS"
+echo "-------------"
+
+/var/www/html/vendor/bin/phpcs --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@
+
+
+# Run PHPSTAN
+echo "-------------"
+echo "Running PHPSTAN"
+echo "-------------"
+
+/var/www/html/vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $@
+
+echo "--------------------------------------------------"
+echo "Testing $@ for PHP 8.2 compatibility"
+echo "--------------------------------------------------"
+vendor/bin/phpcs -p $@ --standard="PHPCompatibility" --runtime-set testVersion "8.2" --extensions="php,module,inc,install,test,profile,theme"
+
+
+# Run Drupal Check
+echo "-------------"
+echo "Running Drupal Check"
+echo "-------------"
+
+/var/www/html/vendor/bin/drupal-check $@
+
+echo "===================="
+echo "Running rector with: $@ --dry-run"
+echo "===================="
+vendor/bin/rector process $MODULE_PATH --dry-run

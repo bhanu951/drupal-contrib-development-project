@@ -1,0 +1,23 @@
+#!/bin/bash
+
+## Description: Run PHPUnit
+## Usage: phpunit [flags] [args]
+## Example: "ddev phpunit --group big_pipe" or "ddev phpunit web/core/modules/action"
+
+
+mkdir -p /var/www/html/web/sites/simpletest/browser_output
+
+TOP_LEVEL="/var/www/html"
+cd $TOP_LEVEL
+
+# BROWSERTEST_OUTPUT_DIRECTORY=/var/www/html/web/sites/simpletest/browser_output \
+# BROWSERTEST_OUTPUT_BASE_URL=http://localhost:8080 \
+# SIMPLETEST_DB="mysql://db:db@db/db" \
+# SIMPLETEST_BASE_URL="http://localhost" \
+# SIMPLETEST_DB_SQLITE="sqlite://tmp/sites/simpletest/simpletest.db"
+
+echo "----------------------------"
+echo "Running PHPUNIT Tests..."
+echo "----------------------------"
+
+/var/www/html/vendor/bin/phpunit -c /var/www/html/web/core/phpunit.xml.dist --verbose $@
