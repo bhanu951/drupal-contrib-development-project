@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## Description: Enable Access to ddev Webserver in local Network
+## Usage: expose
+## Example: call url from other device in your local network like 192.168.178.122:8899 (Host-IP:given-Port)
+
+# env
+
+socat tcp-listen:8899,reuseaddr,fork tcp:localhost:32770
+#socat tcp-listen:8899,reuseaddr,fork tcp:localhost:${DDEV_HOST_WEBSERVER_PORT}

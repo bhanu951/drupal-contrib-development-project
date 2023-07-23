@@ -1,0 +1,15 @@
+#!/bin/bash
+
+## Description: Run phpstan
+## Usage: phpstan [flags] [args]
+## Example: "ddev phpstan web/modules/custom"
+
+TOP_LEVEL="/var/www/html"
+cd $TOP_LEVEL
+
+echo "--------------"
+echo "Running PHPSTAN"
+echo "--------------"
+
+/var/www/html/vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $@ || \
+echo "Return code ignored"
