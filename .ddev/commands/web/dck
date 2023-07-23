@@ -1,0 +1,15 @@
+#!/bin/bash
+
+## Description: Run dck
+## Usage: dck [flags] [args]
+## Example: "ddev dck web/modules/custom"
+
+TOP_LEVEL="/var/www/html"
+cd $TOP_LEVEL
+
+# Run Drupal Check
+echo "-------------"
+echo "Running Drupal Check"
+echo "-------------"
+
+vendor/bin/drupal-check $@

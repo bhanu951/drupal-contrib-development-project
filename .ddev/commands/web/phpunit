@@ -5,7 +5,7 @@
 ## Example: "ddev phpunit --group big_pipe" or "ddev phpunit web/core/modules/action"
 
 
-mkdir -p /var/www/html/web/sites/simpletest/browser_output
+mkdir -p web/sites/simpletest/browser_output
 
 TOP_LEVEL="/var/www/html"
 cd $TOP_LEVEL
@@ -20,4 +20,4 @@ echo "----------------------------"
 echo "Running PHPUNIT Tests..."
 echo "----------------------------"
 
-/var/www/html/vendor/bin/phpunit -c /var/www/html/web/core/phpunit.xml.dist --verbose $@
+vendor/bin/phpunit -c web/core/phpunit.xml.dist --verbose $@

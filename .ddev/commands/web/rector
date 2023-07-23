@@ -6,7 +6,7 @@
 
 if [ $# -eq 0 ]
 then
-  echo "You must specify a module; e.g. 'ddev rector web/modules/contrib/admin_toolbar'"
+  echo "You must specify a module path; e.g. 'ddev rector web/modules/contrib/admin_toolbar'"
   exit
 fi
 
