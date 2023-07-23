@@ -1,8 +1,9 @@
 # This file mirrors vendor/mglaman/drupal-check/phpstan.neon but adds an ignore rule.
 includes:
-	- vendor/phpstan/phpstan-strict-rules/rules.neon
-	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
-	- vendor/mglaman/phpstan-drupal/extension.neon
+  - vendor/phpstan/phpstan-strict-rules/rules.neon
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+  - vendor/mglaman/phpstan-drupal/extension.neon
+  - phpstan-baseline.neon
 parameters:
   level: 2
   checkGenericClassInNonGenericObjectType: false
@@ -12,5 +13,3 @@ parameters:
     - "#^Unsafe usage of new static#"
     # PHP unit statics: https://github.com/phpstan/phpstan-strict-rules/pull/5
     - "#^Dynamic call to static method PHPUnit\\\\Framework\\\\Assert#"
-includes:
-  - phpstan-baseline.neon

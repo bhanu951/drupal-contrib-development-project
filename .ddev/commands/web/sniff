@@ -34,6 +34,11 @@ echo "-------------"
 
 /var/www/html/vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $@
 
+echo "--------------------------------------------------"
+echo "Testing $@ for PHP 8.2 compatibility"
+echo "--------------------------------------------------"
+vendor/bin/phpcs -p $@ --standard="PHPCompatibility" --runtime-set testVersion "8.2" --extensions="php,module,inc,install,test,profile,theme"
+
 
 # Run Drupal Check
 echo "-------------"
@@ -41,3 +46,8 @@ echo "Running Drupal Check"
 echo "-------------"
 
 /var/www/html/vendor/bin/drupal-check $@
+
+echo "===================="
+echo "Running rector with: $@ --dry-run"
+echo "===================="
+vendor/bin/rector process $MODULE_PATH --dry-run
