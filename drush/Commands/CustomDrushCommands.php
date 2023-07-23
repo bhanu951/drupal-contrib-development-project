@@ -27,7 +27,7 @@ class CustomDrushCommands extends DrushCommands implements SiteAliasManagerAware
    *
    * @command cdc:database:size
    *
-   * @aliases cdc:cds
+   * @aliases cdc:ds
    *
    * @field-labels
    *   database: Database
@@ -69,7 +69,7 @@ class CustomDrushCommands extends DrushCommands implements SiteAliasManagerAware
    *
    * @command cdc:table:size
    *
-   * @aliases cdc:cts
+   * @aliases cdc:ts
    *
    * @field-labels
    *   table: Table
