@@ -6,5 +6,5 @@
 
 # env
 
-socat tcp-listen:8899,reuseaddr,fork tcp:localhost:32770
-#socat tcp-listen:8899,reuseaddr,fork tcp:localhost:${DDEV_HOST_WEBSERVER_PORT}
+# socat tcp-listen:8899,reuseaddr,fork tcp:localhost:32770
+socat tcp-listen:8899,reuseaddr,fork tcp:localhost:${DDEV_HOST_WEBSERVER_PORT}

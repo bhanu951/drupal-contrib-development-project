@@ -15,8 +15,17 @@ nfs_mount_enabled: false
 mutagen_enabled: false
 use_dns_when_possible: false
 composer_version: "2"
-web_environment: []
 nodejs_version: "16"
+web_environment:
+- BROWSERTEST_OUTPUT_DIRECTORY=/var/www/html/web/sites/simpletest/browser_output
+- BROWSERTEST_OUTPUT_BASE_URL=${DDEV_PRIMARY_URL}
+- SIMPLETEST_DB=sqlite://tmp/sites/simpletest/db.sqlite
+- TXT_RESET=tput sgr 0
+- TXT_RED=tput setaf 1
+- TXT_GREEN=tput setaf 2
+- TXT_YELLOW=tput setaf 3
+- TXT_CYAN=tput setaf 6
+- TXT_ALERT=tput setab 1 && tput setaf 7
 hooks:
   post-start:
   - exec: mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS phpunit; GRANT ALL ON phpunit.* to 'db'@'%';"
