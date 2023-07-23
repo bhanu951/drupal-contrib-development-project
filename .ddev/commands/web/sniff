@@ -4,19 +4,28 @@
 ## Usage: sniff [flags] [args]
 ## Example: "ddev sniff web/modules/custom"
 
+
+if [ $# -eq 0 ]
+then
+  echo "You must specify a module path; e.g. 'ddev rector web/modules/contrib/admin_toolbar'"
+  exit
+fi
+
 TOP_LEVEL="/var/www/html"
 cd $TOP_LEVEL
 
+
 echo "======================"
-echo "Running code sniffer against: $1"
+echo "Running code sniffer against: $@"
 echo "======================"
+
 
 # auto-fix what can be fixed
 echo "--------------"
 echo "Running PHPCBF"
 echo "--------------"
 
-/var/www/html/vendor/bin/phpcbf --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@
+vendor/bin/phpcbf --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@
 
 
 # find what is left to fix
@@ -24,7 +33,7 @@ echo "-------------"
 echo "Running PHPCS"
 echo "-------------"
 
-/var/www/html/vendor/bin/phpcs --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@
+vendor/bin/phpcs --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@
 
 
 # Run PHPSTAN
@@ -32,7 +41,8 @@ echo "-------------"
 echo "Running PHPSTAN"
 echo "-------------"
 
-/var/www/html/vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $@
+vendor/bin/phpstan analyze --configuration=phpstan.neon --no-ansi --memory-limit=2G --level=2 $@
+
 
 echo "--------------------------------------------------"
 echo "Testing $@ for PHP 8.2 compatibility"
@@ -45,9 +55,11 @@ echo "-------------"
 echo "Running Drupal Check"
 echo "-------------"
 
-/var/www/html/vendor/bin/drupal-check $@
+vendor/bin/drupal-check $@
+
 
 echo "===================="
 echo "Running rector with: $@ --dry-run"
 echo "===================="
-vendor/bin/rector process $MODULE_PATH --dry-run
+
+vendor/bin/rector process $@ --dry-run

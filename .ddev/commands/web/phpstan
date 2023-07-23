@@ -1,15 +1,34 @@
 #!/bin/bash
 
-## Description: Run phpstan
+## Description: Run phpstan on a specific module.
 ## Usage: phpstan [flags] [args]
-## Example: "ddev phpstan web/modules/custom"
+## Example: "ddev phpstan web/modules/contrib/admin_toolbar"
+## Example: "ddev phpstan web/modules/contrib/admin_toolbar -l 8"
 
 TOP_LEVEL="/var/www/html"
 cd $TOP_LEVEL
 
-echo "--------------"
-echo "Running PHPSTAN"
-echo "--------------"
+if [ $# -eq 0 ]
+then
+  echo "You must specify a module path; e.g. 'ddev phpstan web/modules/contrib/admin_toolbar'"
+  exit
+fi
 
-/var/www/html/vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $@ || \
-echo "Return code ignored"
+if [ ! -d "$1" ]
+then
+  echo "The specified module [$1] does not exist."
+  exit
+fi
+
+# Level setting.
+LEVEL=2
+if [ $# -eq 3 ]
+then
+  LEVEL=$3
+fi
+
+echo "======================"
+echo "Running PHPStan against: $1 at level ${LEVEL}"
+echo "======================"
+
+vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $1 --level=${LEVEL}
