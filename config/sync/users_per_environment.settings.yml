@@ -1,0 +1,5 @@
+_core:
+  default_config_hash: ckeMzeIL1CE_vP1lXeJRRfirUklnrrGig0YxsQ7742M
+users_per_environment_skip_environment: 1
+users_per_environment_site_url_sld: example
+users_per_environment_site_url_tld: com

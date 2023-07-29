@@ -1,0 +1,26 @@
+uuid: 50e82b9d-784b-4bf2-8514-b898f086ad7c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_users_per_environment
+  module:
+    - options
+    - user
+  enforced:
+    module:
+      - users_per_environment
+_core:
+  default_config_hash: yVwO33-cmkPNIEK6j72vKXBILF_K6iv8iPlGR5wR_94
+id: user.user.field_users_per_environment
+field_name: field_users_per_environment
+entity_type: user
+bundle: user
+label: 'Users per environment'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

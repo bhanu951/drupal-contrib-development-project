@@ -1,0 +1,41 @@
+uuid: da7cf8e8-804d-4571-805e-76887ea185ac
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - user
+  enforced:
+    module:
+      - users_per_environment
+_core:
+  default_config_hash: tV6XI84Ok2VBfe71FVQcdIJxBFukpokMBqJgvWVH2H8
+id: user.field_users_per_environment
+field_name: field_users_per_environment
+entity_type: user
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: prod
+      label: prod
+    -
+      value: stage
+      label: stage
+    -
+      value: test
+      label: test
+    -
+      value: dev
+      label: dev
+    -
+      value: local
+      label: local
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
