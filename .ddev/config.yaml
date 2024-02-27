@@ -14,6 +14,7 @@ database:
 nfs_mount_enabled: false
 mutagen_enabled: false
 use_dns_when_possible: false
+project_tld: local
 composer_version: "2"
 nodejs_version: "16"
 web_environment:

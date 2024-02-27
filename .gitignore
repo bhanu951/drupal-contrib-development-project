@@ -30,3 +30,7 @@ npm-debug.log
 .DS_Store
 .editorconfig
 .gitattributes
+
+# Local Files
+web/modules/contrib_local/
+keys/
