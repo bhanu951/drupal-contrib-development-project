@@ -31,4 +31,4 @@ echo "======================"
 echo "Running PHPStan against: $1 at level ${LEVEL}"
 echo "======================"
 
-vendor/bin/phpstan analyze  --configuration=phpstan.neon --no-ansi --memory-limit=2G $1 --level=${LEVEL}
+/var/www/html/vendor/bin/phpstan analyze --configuration=phpstan.neon --no-ansi --memory-limit=2G $1 --level=${LEVEL}

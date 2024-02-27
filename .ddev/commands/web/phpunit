@@ -20,4 +20,4 @@ echo "----------------------------"
 echo "Running PHPUNIT Tests..."
 echo "----------------------------"
 
-vendor/bin/phpunit -c web/core/phpunit.xml.dist --verbose $@
+/var/www/html/vendor/bin/phpunit -c /var/www/html/web/core/phpunit.xml.dist --verbose $@
