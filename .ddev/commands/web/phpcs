@@ -1,17 +1,15 @@
 #!/bin/bash
 
-## Description: Run phpcs
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+## Description: Run phpcs inside the web container
 ## Usage: phpcs [flags] [args]
-## Example: "ddev phpcs web/modules/custom"
+## Example: "ddev phpcs" or "ddev phpcs -n"
+## ExecRaw: true
 
-TOP_LEVEL="/var/www/html"
-cd $TOP_LEVEL
-
-echo "--------------"
-echo "Running PHPCS"
-echo "--------------"
-
-vendor/bin/phpcs --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@ || \
-echo "Return code ignored"
-
-# phpcs --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,css,info,txt,md,yml'
+if ! command -v phpcs >/dev/null; then
+  echo "phpcs is not available. You may need to 'ddev composer install'"
+  exit 1
+fi
+test -e phpcs.xml.dist || curl -OL https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/assets/phpcs.xml.dist
+phpcs -s --report-full --report-summary --report-source web/modules/custom --ignore=*/.ddev/* "$@"

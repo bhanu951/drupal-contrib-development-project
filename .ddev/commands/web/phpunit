@@ -1,23 +1,22 @@
 #!/bin/bash
 
-## Description: Run PHPUnit
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+## Description: Run phpunit inside the web container
 ## Usage: phpunit [flags] [args]
-## Example: "ddev phpunit --group big_pipe" or "ddev phpunit web/core/modules/action"
+## Example: "ddev phpunit" or "ddev phpunit --stop-on-failure"
+## ExecRaw: true
 
+if ! command -v phpunit >/dev/null; then
+  echo "phpunit is not available. You may need to 'ddev composer install'"
+  exit 1
+fi
 
-mkdir -p web/sites/simpletest/browser_output
-
-TOP_LEVEL="/var/www/html"
-cd $TOP_LEVEL
-
-# BROWSERTEST_OUTPUT_DIRECTORY=/var/www/html/web/sites/simpletest/browser_output \
-# BROWSERTEST_OUTPUT_BASE_URL=http://localhost:8080 \
-# SIMPLETEST_DB="mysql://db:db@db/db" \
-# SIMPLETEST_BASE_URL="http://localhost" \
-# SIMPLETEST_DB_SQLITE="sqlite://tmp/sites/simpletest/simpletest.db"
-
-echo "----------------------------"
-echo "Running PHPUNIT Tests..."
-echo "----------------------------"
-
-/var/www/html/vendor/bin/phpunit -c /var/www/html/web/core/phpunit.xml.dist --verbose $@
+# CHECK for local config.
+if [ -f "phpunit.xml" ]; then
+    # Defer to local config
+    phpunit "$@"
+else
+    # Bootstrap Drupal tests and run all custom module tests.
+    phpunit --bootstrap $PWD/$DDEV_DOCROOT/core/tests/bootstrap.php $DDEV_DOCROOT/modules/custom "$@"
+fi

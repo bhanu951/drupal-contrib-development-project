@@ -1,34 +1,18 @@
 #!/bin/bash
 
-## Description: Run phpstan on a specific module.
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+## Description: Run phpstan inside the web container
 ## Usage: phpstan [flags] [args]
-## Example: "ddev phpstan web/modules/contrib/admin_toolbar"
-## Example: "ddev phpstan web/modules/contrib/admin_toolbar -l 8"
+## Example: "ddev phpstan" or "ddev phpstan -n"
+## ProjectTypes: drupal,drupal8,drupal9,drupal10
+## ExecRaw: true
 
-TOP_LEVEL="/var/www/html"
-cd $TOP_LEVEL
-
-if [ $# -eq 0 ]
-then
-  echo "You must specify a module path; e.g. 'ddev phpstan web/modules/contrib/admin_toolbar'"
-  exit
+if ! command -v phpstan >/dev/null; then
+  echo "phpstan is not available. You may need to 'ddev poser'"
+  exit 1
 fi
-
-if [ ! -d "$1" ]
-then
-  echo "The specified module [$1] does not exist."
-  exit
-fi
-
-# Level setting.
-LEVEL=2
-if [ $# -eq 3 ]
-then
-  LEVEL=$3
-fi
-
-echo "======================"
-echo "Running PHPStan against: $1 at level ${LEVEL}"
-echo "======================"
-
-/var/www/html/vendor/bin/phpstan analyze --configuration=phpstan.neon --no-ansi --memory-limit=2G $1 --level=${LEVEL}
+test -e phpstan.neon || curl -OL https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/assets/phpstan.neon
+# Add an empty baseline file to ensure it exists.
+test -e phpstan-baseline.neon || touch phpstan-baseline.neon
+phpstan analyse $DDEV_DOCROOT/modules/custom "$@"

@@ -1,16 +1,15 @@
 #!/bin/bash
 
-## Description: Run phpcbf
+#ddev-generated
+## Command provided by https://github.com/ddev/ddev-drupal-contrib
+## Description: Run phpcbf inside the web container
 ## Usage: phpcbf [flags] [args]
-## Example: "ddev phpcbf web/modules/custom"
+## Example: "ddev phpcbf" or "ddev phpcbf -n"
+## ExecRaw: true
 
-TOP_LEVEL="/var/www/html"
-cd $TOP_LEVEL
-
-echo "--------------"
-echo "Running PHPCBF"
-echo "--------------"
-
-vendor/bin/phpcbf --standard="Drupal,DrupalPractice" --extensions="php,module,inc,install,test,profile,theme,info,yml,css,js,txt,md,twig " $@ || \
-echo "Return code ignored"
-
+if ! command -v phpcbf >/dev/null; then
+  echo "phpcbf is not available. You may need to 'ddev composer install'"
+  exit 1
+fi
+test -e phpcs.xml.dist || curl -OL https://git.drupalcode.org/project/gitlab_templates/-/raw/default-ref/assets/phpcs.xml.dist
+phpcbf -s --report-full --report-summary --report-source web/modules/custom "$@"
